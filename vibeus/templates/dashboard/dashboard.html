@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'user_profile/profile.css' %}">
+    <header>
+        <button onclick="location.href='{% url 'dashboard' user.username %}'">Dashboard</button>
+                <button onclick="location.href='{% url 'map'  %}'">Map</button>
+        <button onclick="location.href='{% url 'chat' user.username %}'">Chat</button>
+    </header>
+</head>
+<body>
+    <!-- You can add your header here -->
+    <div class="profile">
+        <div class="profile-header">
+            <img class="profile-pic" src="{% static 'user_profile/profile_pic.jpeg' %}" alt="Profile picture">  
+                        <h1>{{ profile.user.username }}</h1>
+        </div>
+        <p>{{ profile.age }} | {{ profile.gender }}</p>
+        <p>{{ profile.zodiac_sign }}</p>
+        <div class="highlights">
+            {% for hobby in profile.hobbies.all %}
+                <span class="highlight">{{ hobby.name }}</span>
+            {% endfor %}
+        </div>
+        <p class="bio">{{ profile.bio }}</p>
+    </div>
+</body>
+</html>

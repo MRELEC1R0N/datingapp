@@ -1,0 +1,84 @@
+/* profile.css */
+
+body {
+    background-color: #000000;
+    color: #00CEE6;
+    padding-top: 50px; /* Space for header */
+}
+/* profile.css */
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: 25%;
+    border-right: 1px solid #00CA74;
+    padding: 10px;
+}
+
+.user {
+    margin-bottom: 10px;
+}
+
+.chat {
+    width: 50%;
+    /* Rest of your chat styles... */
+}
+
+.dm {
+    width: 25%;
+    border-left: 1px solid #00CA74;
+    padding: 10px;
+}
+
+form {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+input[type="text"] {
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+button {
+    background-color: #00CA74;
+    border: none;
+    color: #000000;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.profile-header {
+    display: flex; /* Align items side by side */
+    align-items: center; /* Center items vertically */
+    gap: 20px; /* Space between items */
+}
+
+.profile-pic {
+    width: 200px; /* Increased size */
+    height: 200px; /* Increased size */
+    border-radius: 50%;
+}
+
+.highlight {
+    background-color: #00CA74;
+    color: #000000;
+    padding: 5px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.bio {
+    color: #FF9370;
+}
