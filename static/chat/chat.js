@@ -1,3 +1,4 @@
+
 let input_message = $('#input-message')
 let message_body = $('.msg_card_body')
 let send_message_form = $('#send-message-form')

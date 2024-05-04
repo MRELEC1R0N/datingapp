@@ -1,12 +1,10 @@
-from django.shortcuts import render,redirect , HttpResponse
-from .forms import UserSignUpForm , UserProfileForm
+from django.shortcuts import render,redirect ,HttpResponse
+from .forms import UserSignUpForm , UserProfileForm,MessageForm
 from django.contrib.auth import authenticate, login 
 from .models import UserProfile , Message
 from django.contrib.auth.models import User
-from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
-from .models import Thread
-from django.contrib.auth.decorators import login_required
+
+
 
 # Create your views here.
 def home(request):
@@ -63,10 +61,29 @@ def map(request):
     return HttpResponse("This is map")
 
 
-@login_required
-def messages_page(request):
-    threads = Thread.objects.by_user(user=request.user).prefetch_related('chatmessage_thread').order_by('timestamp')
-    context = {
-        'Threads': threads
-    }
-    return render(request, 'messages.html', context)
+def chat_view(request):
+    if request.user.is_authenticated:
+        users = User.objects.all().exclude(id=request.user.id)  # get all users except the current user
+        return render(request, 'chat/chat.html', {'users': users})
+    else:
+        return redirect('login')
+
+
+def private_chat_view(request, user_id):
+    if request.user.is_authenticated:
+        other_user = User.objects.get(id=user_id)
+        messages = Message.objects.filter(sender__in=[request.user, other_user], receiver__in=[request.user, other_user])
+        room_name = f'{request.user.id}_{other_user.id}'  # Create room name
+        if request.method == 'POST':
+            form = MessageForm(request.POST)
+            if form.is_valid():
+                message = form.save(commit=False)
+                message.sender = request.user
+                message.receiver = other_user
+                message.save()
+                return redirect('private_chat', user_id=user_id)
+        else:
+            form = MessageForm()
+        return render(request, 'chat/private_chat.html', {'messages': messages, 'form': form, 'other_user': other_user, 'room_name': room_name})
+    else:
+        return redirect('login')

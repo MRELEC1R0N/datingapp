@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chat with {{ other_user.username }}</title>
+        <link rel="stylesheet" href="{% static 'styling/chatcss.css' %}">
+    </head>
+</head>
+<body>
+    <nav id="nav-chat">
+            <a href="{% url 'chat'}">
+            <div id="img1" >
+            <img id="img2" src="../../static/img/back-button.png" alt="">
+        </div>
+        </a>
+    </nav>
+    <h2 >Chat with {{ other_user.username }}</h2>
+    
+    <div >
+        <div id="chat1">
+        <ul >
+            {% for message in messages %}
+            <li style="color: #FFFFFF;">{{ message.sender.username }}: {{ message.message }}</li>
+            {% empty %}
+            <li >No messages.</li>
+            {% endfor %}
+        </ul>
+        </div>
+    
+    <form   method="post" style="text-align: center;">
+        <div id="test2" style="color: #FFFFFF;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button id="test-2" type="submit">Send</button>
+    </div>
+        
+    </form>
+</div>
+</div>
+</body>
+</html>
